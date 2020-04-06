@@ -10,5 +10,16 @@ Information: it is nothing but meaningfull data or process data.
    eg: student markssheet
        invoice of customers
 
+As we know we are storing data in various ways like in books,flat file and databases ..etc.
+if we storing data in books and flat file we have many drawbacks are there those are:
+ 1)data retrieval
+ 2)data redundancy
+ 3)data integrity
+ 4)data security
+ 5)data indexing
+ 
+data retrieval: if we want to retrieving data from flat files we must develop application programs in higher level languages where as it want to retrieval data.
+data redundancy: in flat file sometimes we are maintaining multiple copy of the same data in diffrent places. this data is called as duplicate or redundancy data.in flat files whenever we are modifiying this data in one location is it not affected in other locations this is called as inconsistency thats why flatfiles doesnot maintain consistency on daya automatically.
+
 
      
