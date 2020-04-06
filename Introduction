@@ -1,0 +1,14 @@
+Oracle is a relational database which is used to store data or information perminantly into secondary storage devices(Databases).
+Oracle,db2,sqlserver,terdeta...etc these are second storage devices.
+if we want storing the information in second storage devices(Oracle Database) then we can using the languages called as SQL and PLSQL.
+why do we storing the Date or Information? for Future references.
+  
+Data : it is collection of raw facts.
+  eg:Student marks
+     customer names
+Information: it is nothing but meaningfull data or process data.
+   eg: student markssheet
+       invoice of customers
+
+
+     
