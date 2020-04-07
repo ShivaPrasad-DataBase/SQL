@@ -1,0 +1,26 @@
+Sequence is a database object which is useing to automatically generates sequence number automatically.
+Generally sequence are used to generates primary key values automatically.
+Once sequence creates No of user simultaneously access.
+Sequence is a independent database object.
+
+Syntax:
+
+      create sequence *sequence_name*
+      start with *starting_value*
+      increment by *increment_value*
+      minvalue *minimum_value*
+      maxvalue *maximum_value*
+      cycle/nocycle
+      cache/nocache;
+      
+Example:
+      
+      create sequence s1
+      start with 1
+      increment by 1
+      minvalue 1
+      maxvalue 100
+      cycle/nocycle
+      cache/nocache;
+      
+   
