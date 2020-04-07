@@ -22,5 +22,29 @@ Example:
       maxvalue 100
       cycle/nocycle
       cache/nocache;
+
+* if we can describe sequence values with character values then get error.
+   
+   
+Example:
+
+        create sequence s1
+        start with 'one'
+        increment by 'one'
+        minvalue 'one'
+        maxvalue 'five'
+        nocycle
+        nocache;
+
+ ORA-01722: invalid number
+
+-> if we want to generate sequence value or access sequence value then we are using following 2 pseudo columns
+these are:
+
+1)currval
+2)nextval
+
+
+ 
       
    
