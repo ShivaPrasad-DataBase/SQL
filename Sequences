@@ -42,7 +42,46 @@ Example:
 these are:
 
 1)currval
+syntax:squence_name.currval;
 2)nextval
+syntax:squence_name.nextval;
+
+this pseudo statments also using in DML Operations.
+
+in oracle if we want to check the sequence values then we must use dual table.
+
+ex:
+
+   create sequence s2
+   start with 100
+   increment by 5
+   minvalue 110
+   maxvalue 190
+   nocycle
+   nocache;
+ 
+ select s2.currvalue from dual;
+ error: sequence s2.currvale is not yet defined in this session
+ * In oracle we want to generate first sequence number then we must use nextval pseudo column, 
+ because currval pseudo column return current value of the sequence. 
+ If sequence session already having a value
+ 
+ select s2.nextval from dual;
+ 110
+ select s2.nextval from dual;
+ 115
+ .
+ .
+ .
+ .
+ select s2.nextval from dual;
+ 190
+ select s2.nextval from dual;
+ error : 
+ 
+ 
+   
+
 
 
  
