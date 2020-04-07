@@ -22,9 +22,9 @@ Example:
       maxvalue 100
       cycle/nocycle
       cache/nocache;
-
+* start with value and minvalue should be same or start with value greater than minvalue.
 * if we can describe sequence values with character values then get error.
-   
+ 
    
 Example:
 
@@ -53,9 +53,9 @@ in oracle if we want to check the sequence values then we must use dual table.
 ex:
 
    create sequence s2
-   start with 100
+   start with 110
    increment by 5
-   minvalue 110
+   minvalue 100
    maxvalue 190
    nocycle
    nocache;
@@ -77,7 +77,122 @@ ex:
  select s2.nextval from dual;
  190
  select s2.nextval from dual;
- error : 
+ORA-08004: sequence S2.NEXTVAL exceeds MAXVALUE and cannot be instantiated 
+ 
+ ** if currval and nextval in diffrent sessions
+ session 1
+ ---------
+ select s1.nextval from dual;
+ 1
+select s1.nextval from dual;
+ 2
+ select s1.nextval from dual;
+ 3
+ select s1.currval from dual;
+ 3
+ 
+  session 2
+ ---------
+ select s1.nextval from dual;
+ 4
+select s1.nextval from dual;
+ 5
+ select s1.nextval from dual;
+ 6
+ select s1.nextval from dual;
+ 7
+ select s1.currval from dual;
+ 7
+ 
+ ->If we want to generate primary key values automatically then we are using auto increment concepts in all databases.
+ 
+ Syntax:
+ columnname datatype(size) default sequencename.nextval primary key;
+ 
+ create sequence s3
+ start with 1001
+ increment by 1
+ minvalue 1001
+ maxvalue 9999
+ nocycle
+ nocache;
+ 
+ create table test(sno number(4) default s3.nextval primary key,name varchar(20));
+ insert into test(name)values('shiva');
+ insert into test(name)values('prasad');
+ insert into test(name)values('oracle');
+ insert into test values(s3.nextval,'sql');
+ insert into test(sno,name)values(s3.nextval,'plsql');
+ select * from test;
+ 
+SNO	NAME
+1001	shiva
+1002	prasad
+1003	oracle
+1004	sql
+1005	plsql
+5 rows selected.
+
+update 
+-----
+alter table test add ord number(2);
+create sequence s4 start with 10;
+update test set ord=s4.nextval;
+select * from test;
+
+SNO	NAME	   ORD
+1001	shiva	   10
+1002	prasad   11
+1003	oracle   12
+1004	sql	   13
+1005	plsql	   14
+
+5 rows selected.
+
+in oracle we can also change sequence parameter value by suing alter command but we are not allowed to change starting sequnce number.
+
+sysntax
+     alter sequence sequence_name
+     parameter_name new_value;
+ 
+ example:
+ 
+ create sequence s5
+ start with 1
+ increment by 1
+ minvalue 1
+ maxvalue 100
+ nocycle
+ nocache;
+ 
+ create table test_2(sno number(3) default s5.nextval,name varchar2(20));
+ insert into test_2 (name) values('shiva');
+ insert into test_2 (name) values('prasad');
+ insert into test_2 (name) values('oracle');
+ 
+ select * from test_2;
+ 
+ SNO	NAME
+1	shiva
+2	prasad
+3	oracle
+3 rows selected.
+
+alter sequence s5 increment by -1;
+  insert into test_2 (name) values('sql');
+ insert into test_2 (name) values('plsql');
+ 
+ select * from test_2;
+ 
+ SNO	NAME
+1	shiva
+2	prasad
+3	oracle
+2	sql
+1	plsql
+5 rows selected.
+ 
+ 
  
  
    
