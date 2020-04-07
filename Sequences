@@ -191,14 +191,67 @@ alter sequence s5 increment by -1;
 2	sql
 1	plsql
 5 rows selected.
- 
- 
- 
- 
+
+NOTE: In sequence start with cannot be less then minvalue.
+
+ex:
+create sequence s6 
+start with 100
+increment by 5
+minvalue 110
+maxvalue 200
+nocycle
+nocache;
+
+error:start with cannot be less than minvalue.
+
+Cycle:
+------
+when ever write sequence we mention cycle or no cycle it is optional, but by default nocycle.
+
+example
+------
+
+create sequence s7
+start with 1
+increment by 1
+minvalue 1
+maxvalue 3;
+
+create table test (sno number(5) default s1.nextval, name varchar2(50));
+insert into test(name)values('sp');
+insert into test(name)values('sp');
+insert into test(name)values('sp');
+insert into test(name)values('sp');
+
+error:ORA-08004: sequence S1.NEXTVAL exceeds MAXVALUE and cannot be instantiated
+
+Cache:
+------
+->cache is a memory area which is used to access sequence value very fastly.
+->generally cache memory area stores set of sequence numbers which is used to improves performance of the sequence.
+->generally whenever we are creating a sequence then the sequence are generated in harddisk.
+whenever we are requesting sequence value by using currval and nextval through a tool then server process checks it requested sequence is aviable 
+in cache memory area.if it is not aviable in oracle in cache memory area then oracle servers searches requested sequencea are available in 
+harddisk if it is avaible then only oracle server fetches requested sequence value to cache memory area.then only  that value is return to client tool.
+->whenever we are requesting sequence number more no of time then this process degrades performance of the sequence to overcome this problem
+for improve the performance of the sequence we are putting set of sequence no in cache memory area by using cache optional clause, then only whenever
+we are using sequence number then server process directly fetches numbers from cache memory area, this process improve perforamnce of the
+sequence because it reduces disk input and output.
+->by default oracle sequence cache value is 20 and minimum cache value is 2;
+
+* In oracle sequence object information stores in "user_sequences" data dictionary.
+
+   select * from user_sequences;
+   
+   SEQUENCE_NAME	MIN_VALUE	MAX_VALUE	INCREMENT_BY	CYCLE_FLAG	ORDER_FLAG	CACHE_SIZE	LAST_NUMBER	SCALE_FLAG	EXTEND_FLAG	SHARDED_FLAG	SESSION_FLAG	KEEP_VALUE
+          S1	      1	10	      1	                  N	N	            20	      11	      N	      N	      N	            N	            N
+
+
    
 
 
 
- 
+
       
    
