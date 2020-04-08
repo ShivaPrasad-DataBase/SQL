@@ -1,0 +1,68 @@
+Locking is a mechanism which previents unautharized access for our resource.
+they are two levels of locks
+1)Row level
+2)Table Level
+
+1)Row Level:
+->oracle 6.0 introduced row level locks.
+-->in this method we are locking set of rows by using for update clause.this clause is used in select statement only.
+ syntax:
+           select * from table_name where condition for update[nowait]
+           
+ Note:
+ ----
+ whenever we are performaing locks then another user query the data but they cont performance DML operations and also in all databases whenever we using
+ commit or rollback then automatically locks are released.
+ 
+ ex: 
+ session 1
+ 
+ conn scott/tiger
+ select * from emp where deptno=100 for update;
+ commit;
+ [for releasing locks]
+ 
+ 
+ session 2
+ conn shiva/shiva
+ update scott.emp set sal=sal+100 where deptno=10;
+ [we cannot perform DML]
+ 
+ nowait:
+ ------
+ nowait is an optional clause using with along aptional clause whenever we are using this clause then 
+ oracle server automatically return controlled the current session.
+ 
+ if another user not rekeasing loacks also in this case oracle server returns an error ORA-00054:resource busy
+ 
+ 
+ session 1
+ 
+ conn scott/tiger
+ 
+ select * from emp where deptno=10 for update nowait;
+ ora-00054:resourcebusy
+ 
+ session 2
+ 
+ conn shiva/shiva
+ 
+ select * from scott.emp where deptno=10 for update
+ 
+ 
+ table level locks:
+ ----------------
+ table level locks only handle by DBA only
+ in this method we are locking a table. Oracle having following level of locks:
+ 1)share lock
+ 2)exclusive lock
+ 
+ 1)share lock:
+ whenever we are using this lock then another user query the data but they can perform DML operations and also at a time no.of users lock the resource.
+ 
+ syntax:
+ lock table table_name in share mode;
+ 
+ 
+ 
+ 
